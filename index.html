@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title>Veridian Estates | Premium Luxury Real Estate Agency</title>
+  <meta name="description" content="Discover exquisite villas, contemporary penthouses, and elite mansions with Veridian Estates. Realize your next architectural masterpiece with our bespoke brokerage concierge service.">
+  <meta name="keywords" content="luxury real estate, mansions for sale, penthouses, high-end villa, premium estates, real estate broker">
+  <meta name="author" content="Veridian Estates">
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:title" content="Veridian Estates | Premium Luxury Real Estate Agency">
+  <meta property="og:description" content="Discover exquisite villas, contemporary penthouses, and elite mansions with Veridian Estates.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80">
+  
+  <!-- Style Sheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+  <!-- Skip Link for Keyboard Accessibility -->
+  <a href="#main-content" class="sr-only">Skip to main content</a>
+
+  <!-- Header Section -->
+  <header class="header">
+    <div class="container navbar">
+      <a href="#" class="logo" aria-label="Veridian Estates Home">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span>Veridian <span class="logo-accent">Estates</span></span>
+      </a>
+
+      <!-- Desktop Navigation Link Elements -->
+      <nav id="nav-links" aria-label="Main Navigation">
+        <a href="#hero-section" class="active">Home</a>
+        <a href="#listings-section">Properties</a>
+        <a href="#services-section">Services</a>
+        <a href="#agents-section">Agents</a>
+        <a href="#testimonials-section">Testimonials</a>
+        <a href="#contact-section">Contact</a>
+      </nav>
+
+      <!-- CTA Nav Button and Mobile Hamburger Menu -->
+      <div class="nav-actions">
+        <a href="#contact-section" class="btn btn-secondary btn-sm">Schedule Consultation</a>
+        <button id="menu-toggle" class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Body Content -->
+  <main id="main-content">
+
+    <!-- Hero Section -->
+    <section id="hero-section" class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero-content reveal">
+          <span class="hero-tagline">Architectural Masterpieces</span>
+          <h1 id="hero-title" class="hero-title">Discover Luxury Living Tailored to Your Legacy</h1>
+          <p class="hero-text">An curated portfolio of premium residential real estate, beachfront estates, and sky-penthouses across the nation's most exclusive zip codes.</p>
+        </div>
+
+        <!-- Quick Filter Search bar widget -->
+        <div class="hero-search-widget reveal reveal-delay-1">
+          <div class="form-group mb-0">
+            <label for="hero-search-input" class="form-label">Location</label>
+            <input type="text" id="hero-search-input" class="form-input" placeholder="e.g. Beverly Hills, Malibu...">
+          </div>
+          
+          <div class="form-group mb-0">
+            <label for="hero-type-select" class="form-label">Property Type</label>
+            <select id="hero-type-select" class="form-select">
+              <option value="">All Types</option>
+              <option value="villa">Villa</option>
+              <option value="penthouse">Penthouse</option>
+              <option value="mansion">Mansion</option>
+              <option value="apartment">Apartment</option>
+            </select>
+          </div>
+
+          <button id="hero-search-btn" class="btn btn-accent btn-full" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            Search Portfolio
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Banner -->
+    <section class="section section-offset pt-0">
+      <div class="container">
+        <div class="stats-bar reveal reveal-delay-2">
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-number">$1.2B+</span>
+              <span class="stat-label">Transactions Closed</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">15+ Years</span>
+              <span class="stat-label">Brokerage Excellence</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">99%</span>
+              <span class="stat-label">Client Satisfaction</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Properties Section -->
+    <section id="featured-section" class="section" aria-labelledby="featured-title">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-subtitle">Exclusives</span>
+          <h2 id="featured-title" class="section-title">Featured Listings</h2>
+          <p>Explore a selection of our most prestigious, highly coveted properties currently available on the market.</p>
+        </div>
+        
+        <div id="featured-properties-grid" class="properties-grid">
+          <!-- Dynamically populated via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Property Catalog / listings section with sidebar filters -->
+    <section id="listings-section" class="section section-offset" aria-labelledby="listings-title">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-subtitle">Our Portfolio</span>
+          <h2 id="listings-title" class="section-title">Explore Properties</h2>
+          <p>Find your next luxury investment. Use the filters below to narrow down your search in our real-time inventory.</p>
+        </div>
+
+        <div class="catalog-layout">
+          <!-- Sidebar Filters -->
+          <aside class="filter-panel reveal" aria-label="Filters Panel">
+            <div class="filter-panel-title">
+              <h3 style="font-size: var(--fs-md); margin-bottom: 0;">Refine Search</h3>
+              <button id="btn-reset-filters" class="btn-text-link" type="button">Reset</button>
+            </div>
+
+            <!-- Form group inputs -->
+            <div class="form-group">
+              <label for="search-input" class="form-label">Search Keywords</label>
+              <input type="text" id="search-input" class="form-input" placeholder="Title or location...">
+            </div>
+
+            <div class="form-group">
+              <label for="type-select" class="form-label">Property Type</label>
+              <select id="type-select" class="form-select">
+                <option value="">All Types</option>
+                <option value="villa">Villa</option>
+                <option value="penthouse">Penthouse</option>
+                <option value="mansion">Mansion</option>
+                <option value="apartment">Apartment</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="beds-select" class="form-label">Bedrooms</label>
+              <select id="beds-select" class="form-select">
+                <option value="">Any Bedrooms</option>
+                <option value="2">2 Bedrooms</option>
+                <option value="3">3 Bedrooms</option>
+                <option value="4+">4+ Bedrooms</option>
+                <option value="6+">6+ Bedrooms</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Maximum Budget</label>
+              <div class="price-range-wrapper">
+                <input type="range" id="price-range" class="price-slider-input" min="2000000" max="20000000" step="50000" value="20000000">
+                <div class="price-slider-info">
+                  <span>$2.0M</span>
+                  <span id="price-value" style="font-weight: var(--fw-bold); color: var(--primary);">Any Budget</span>
+                  <span>$20.0M+</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Listings Results Grid -->
+          <div id="all-properties-grid" class="properties-grid">
+            <!-- Dynamically populated via JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section id="services-section" class="section" aria-labelledby="services-title">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-subtitle">Our Pillars</span>
+          <h2 id="services-title" class="section-title">The Veridian Difference</h2>
+          <p>Providing custom, concierge-level services that make acquiring property a premium and stress-free experience.</p>
+        </div>
+
+        <div class="services-grid">
+          <!-- Pillar 1 -->
+          <article class="service-item reveal">
+            <div class="service-icon-wrap">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <h3 class="service-title">Absolute Discretion</h3>
+            <p class="service-desc">We operate with the highest level of confidentiality, protecting our clients' privacy in every transaction.</p>
+          </article>
+          
+          <!-- Pillar 2 -->
+          <article class="service-item reveal reveal-delay-1">
+            <div class="service-icon-wrap">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+              </svg>
+            </div>
+            <h3 class="service-title">Off-Market Access</h3>
+            <p class="service-desc">Gain access to exclusive properties and private sales that never appear on public multiple listing services.</p>
+          </article>
+          
+          <!-- Pillar 3 -->
+          <article class="service-item reveal reveal-delay-2">
+            <div class="service-icon-wrap">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <h3 class="service-title">Concierge Scheduling</h3>
+            <p class="service-desc">From private jet coordination to custom private tours, we cater to your scheduling needs seamlessly.</p>
+          </article>
+
+          <!-- Pillar 4 -->
+          <article class="service-item reveal reveal-delay-3">
+            <div class="service-icon-wrap">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
+            </div>
+            <h3 class="service-title">Asset Optimization</h3>
+            <p class="service-desc">We supply expert analysis on local market value appreciation, yield projections, and tax implications.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Agent Profiles Section -->
+    <section id="agents-section" class="section section-offset" aria-labelledby="agents-title">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-subtitle">Our Advisors</span>
+          <h2 id="agents-title" class="section-title">Global Luxury Experts</h2>
+          <p>Meet our elite team of professional brokers, dedicated to providing unparalleled guidance and guidance.</p>
+        </div>
+
+        <div id="agents-grid" class="agents-grid">
+          <!-- Dynamically populated via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Slider Section -->
+    <section id="testimonials-section" class="section testimonials-section" aria-labelledby="testimonials-title">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-subtitle">Testimonials</span>
+          <h2 id="testimonials-title" class="section-title">Trusted By Visionaries</h2>
+        </div>
+
+        <div class="testimonials-slider reveal reveal-delay-1">
+          <!-- Slider contents -->
+          <div id="testimonials-slider-content" class="testimonials-slider-content">
+            <!-- Dynamically populated via JS -->
+          </div>
+
+          <!-- Slider Controls -->
+          <div class="slider-controls">
+            <button id="testimonial-prev" class="slider-arrow" aria-label="Previous Testimonial" type="button">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <div id="testimonial-indicators" class="slider-indicators">
+              <!-- Indicators dot injected via JS -->
+            </div>
+            <button id="testimonial-next" class="slider-arrow" aria-label="Next Testimonial" type="button">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact & Consultation Split Section -->
+    <section id="contact-section" class="section" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="contact-split-layout">
+          <!-- Left Info Column -->
+          <div class="contact-info-panel reveal">
+            <div class="contact-intro">
+              <span class="section-subtitle">Get In Touch</span>
+              <h2 id="contact-title" class="section-title">Schedule a Private Viewing</h2>
+              <p>Whether you wish to purchase your next home or list a premium estate, our expert advisors are ready to deliver a bespoke brokerage service.</p>
+            </div>
+
+            <!-- Contact particulars list -->
+            <div class="contact-details-list">
+              <!-- Item 1 -->
+              <div class="contact-detail-item">
+                <div class="contact-icon-box">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <div class="contact-detail-content">
+                  <h4>Business Hours</h4>
+                  <p>Monday – Friday: 9:00 AM – 6:00 PM</p>
+                  <p>Weekend viewings by private appointment only</p>
+                </div>
+              </div>
+
+              <!-- Item 2 -->
+              <div class="contact-detail-item">
+                <div class="contact-icon-box">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                </div>
+                <div class="contact-detail-content">
+                  <h4>Direct Desk</h4>
+                  <p><a href="tel:+18005559800">+1 (800) 555-9800</a> (Concierge Line)</p>
+                </div>
+              </div>
+
+              <!-- Item 3 -->
+              <div class="contact-detail-item">
+                <div class="contact-icon-box">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                </div>
+                <div class="contact-detail-content">
+                  <h4>Flagship Office</h4>
+                  <p>9460 Wilshire Blvd, Suite 400</p>
+                  <p>Beverly Hills, CA 90212</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Image placeholder representing luxury interior/office -->
+            <div class="contact-image-wrap">
+              <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" alt="Veridian Estates Flagship Showroom in Beverly Hills" loading="lazy">
+            </div>
+          </div>
+
+          <!-- Right Form Column -->
+          <div class="form-card reveal reveal-delay-1">
+            <h3 class="form-card-title">Consultation Request</h3>
+            
+            <form class="inquiry-form-element" novalidate>
+              <div class="form-group">
+                <label for="contact-name" class="form-label">Full Name</label>
+                <input type="text" id="contact-name" name="name" class="form-input" placeholder="Sarah Vance">
+              </div>
+
+              <div class="form-group">
+                <label for="contact-email" class="form-label">Email Address</label>
+                <input type="email" id="contact-email" name="email" class="form-input" placeholder="sarah@example.com">
+              </div>
+
+              <div class="form-group">
+                <label for="contact-phone" class="form-label">Phone Number (Optional)</label>
+                <input type="tel" id="contact-phone" name="phone" class="form-input" placeholder="+1 (310) 555-0100">
+              </div>
+
+              <div class="form-group">
+                <label for="contact-interest" class="form-label">Service Interest</label>
+                <select id="contact-interest" name="interest" class="form-select">
+                  <option value="buy">Buying Luxury Property</option>
+                  <option value="sell">Selling Luxury Asset</option>
+                  <option value="concierge">Private Concierge Request</option>
+                  <option value="investment">Commercial Investment</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-message" class="form-label">Your Message</label>
+                <textarea id="contact-message" name="message" class="form-textarea" placeholder="Describe the property specifications, timeline, or requirements..."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-full" style="margin-top: var(--space-4);">Send Inquiry</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container footer-top">
+      <!-- Footer Brand Info -->
+      <div class="footer-brand">
+        <a href="#" class="logo" aria-label="Veridian Estates Home">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>Veridian <span class="logo-accent">Estates</span></span>
+        </a>
+        <p class="footer-brand-text">Exclusive real estate services catering to high-net-worth individuals, institutional investors, and architectural connoisseurs globally.</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="footer-column-title">Company</h4>
+        <ul class="footer-links-list">
+          <li><a href="#hero-section">About Firm</a></li>
+          <li><a href="#agents-section">Our Advisors</a></li>
+          <li><a href="#services-section">Services</a></li>
+          <li><a href="#">Press Room</a></li>
+        </ul>
+      </div>
+
+      <!-- Categories Links -->
+      <div>
+        <h4 class="footer-column-title">Categories</h4>
+        <ul class="footer-links-list">
+          <li><a href="#listings-section">Luxury Villas</a></li>
+          <li><a href="#listings-section">Penthouses</a></li>
+          <li><a href="#listings-section">Ski Retreats</a></li>
+          <li><a href="#listings-section">Coastal Mansions</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter subscription form -->
+      <div>
+        <h4 class="footer-column-title">Newsletter</h4>
+        <div class="newsletter-form">
+          <p class="newsletter-text">Subscribe to receive exclusive off-market listings and private market analysis.</p>
+          <form class="newsletter-input-group" onSubmit="event.preventDefault(); alert('Subscribed successfully!'); this.reset();">
+            <label for="newsletter-email" class="sr-only">Newsletter Email Address</label>
+            <input type="email" id="newsletter-email" class="form-input" placeholder="advisor@client.com" required>
+            <button type="submit" class="btn btn-accent">Join</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer base credits -->
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Veridian Estates. All rights reserved. Registered brokerage. Equal Housing Opportunity.</p>
+      
+      <!-- Social networks links icons -->
+      <div class="footer-socials">
+        <a href="#" class="footer-social-link" aria-label="LinkedIn Profile">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+            <rect x="2" y="9" width="4" height="12"></rect>
+            <circle cx="4" cy="4" r="2"></circle>
+          </svg>
+        </a>
+        <a href="#" class="footer-social-link" aria-label="Instagram Showcase">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+        </a>
+        <a href="#" class="footer-social-link" aria-label="Twitter News">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Property Inquiry Floating Dialog Modal Component -->
+  <div id="inquiry-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="modal-headline" class="modal-title">Property Inquiry</h3>
+        <button id="modal-close" class="modal-close" aria-label="Close modal Dialog">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <form class="inquiry-form-element" novalidate>
+          <div class="form-group">
+            <label for="modal-property" class="form-label">Selected Property</label>
+            <input type="text" id="modal-property" name="property" class="form-input" readonly style="background-color: var(--bg-offset); cursor: not-allowed;">
+          </div>
+
+          <div class="form-group">
+            <label for="modal-name" class="form-label">Your Full Name</label>
+            <input type="text" id="modal-name" name="name" class="form-input" placeholder="John Doe">
+          </div>
+
+          <div class="form-group">
+            <label for="modal-email" class="form-label">Your Email Address</label>
+            <input type="email" id="modal-email" name="email" class="form-input" placeholder="john@example.com">
+          </div>
+
+          <div class="form-group">
+            <label for="modal-phone" class="form-label">Your Phone Number (Optional)</label>
+            <input type="tel" id="modal-phone" name="phone" class="form-input" placeholder="+1 (310) 555-0100">
+          </div>
+
+          <div class="form-group">
+            <label for="modal-message" class="form-label">Message for Brokerage</label>
+            <textarea id="modal-message" name="message" class="form-textarea" placeholder="I would like to schedule a private viewing or receive full disclosure documents for this property."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full" style="margin-top: var(--space-4);">Submit Inquiry</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
