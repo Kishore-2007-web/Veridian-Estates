@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veridian Estates — Template Documentation</title>
+  <link rel="stylesheet" href="css/doc-style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Sidebar Navigation -->
+  <aside class="doc-sidebar" aria-label="Documentation Sidebar">
+    <div class="doc-brand">
+      <h2>
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-dark);">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span>Veridian Docs</span>
+      </h2>
+    </div>
+    <nav class="doc-nav" aria-label="Documentation Navigation">
+      <a href="#intro" class="doc-nav-item active">Introduction</a>
+      <a href="#structure" class="doc-nav-item">Folder Structure</a>
+      <a href="#customization" class="doc-nav-item">Customization</a>
+      <a href="#data" class="doc-nav-item">Properties & Agents</a>
+      <a href="#seo" class="doc-nav-item">SEO & Accessibility</a>
+      <a href="#faq" class="doc-nav-item">Frequently Asked Questions</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content Panel -->
+  <main class="doc-main" id="main-content">
+    
+    <!-- Introduction Section -->
+    <section id="intro">
+      <h1>Documentation</h1>
+      <p>Welcome to the official documentation for the <strong>Veridian Estates</strong> Premium Luxury Real Estate Website Template. This guide outlines how to customize, configure, and launch your template quickly and efficiently.</p>
+      
+      <div class="alert">
+        <strong>Support Note:</strong> If you run into any issues that aren't covered in this documentation, please review our <a href="../SUPPORT.md">Support Guide</a> or contact our concierge desk directly at `support@veridianestates.com`.
+      </div>
+    </section>
+
+    <!-- Folder Structure Section -->
+    <section id="structure">
+      <h2>Folder Structure</h2>
+      <p>The package contains the production template files, documentation files, and licensing files organized as follows:</p>
+      <pre><code>Real Estate Website/
+├── Template/                  # Ready-to-deploy website files
+│   ├── css/                   # Stylesheets
+│   │   ├── base.css           # Typography and basic rules
+│   │   ├── components.css     # Buttons, inputs, modals, animations
+│   │   ├── main.css           # Sections (hero, stats, contact, testimonials)
+│   │   └── variables.css      # CSS variables (colors, fonts, metrics)
+│   ├── js/                    # JavaScript logic files
+│   │   ├── app.js             # Filter, modal, slider logic
+│   │   └── data.js            # Properties and agent data arrays
+│   ├── assets/                # Local optimized assets
+│   │   ├── images/            # Local high-quality property & agent headshots
+│   │   └── favicons/          # Favicon icons, manifest, touch icons
+│   ├── index.html             # Main entry point (HTML5 structured)
+│   ├── robots.txt             # Search crawler directives
+│   └── sitemap.xml            # SEO XML Sitemap template
+├── Documentation/             # Styled offline guide (Current view)
+├── README.md                  # Quickstart text
+├── LICENSE.txt                # Single Application License
+├── CHANGELOG.md               # Version details
+├── SUPPORT.md                 # Support policies & guidelines
+└── CREDITS.md                 # Core attributions for fonts/icons</code></pre>
+    </section>
+
+    <!-- Customization Section -->
+    <section id="customization">
+      <h2>Branding & Style Customization</h2>
+      <p>The template is designed with maximum flexibility in mind. You can update the brand styling and look-and-feel of the site simply by changing a few CSS variables.</p>
+      
+      <h3>1. Modifying Brand Colors</h3>
+      <p>Open <code>Template/css/variables.css</code> in your code editor. Locate the color tokens block inside the <code>:root</code> selector. Update the color hex codes and the corresponding RGB values:</p>
+      <pre><code>/* Color variables example */
+:root {
+  --primary-rgb: 15, 23, 42;      /* Slate 900 */
+  --primary: rgb(var(--primary-rgb));
+  --accent-rgb: 197, 168, 128;   /* Warm Gold / Champagne (#c5a880) */
+  --accent: rgb(var(--accent-rgb));
+  --accent-hover: #B49469;       /* Hover Gold */
+  --accent-dark: #9F825C;        /* Secondary Dark Gold */
+}</code></pre>
+      <p><em>Note: The RGB variables (e.g. <code>--primary-rgb</code>) are required for background transparency overlays (such as hero filters and testimonial card backdrops) to dynamically adjust to your colors.</em></p>
+
+      <h3>2. Modifying Fonts</h3>
+      <p>The template utilizes <strong>Playfair Display</strong> for headings and <strong>Plus Jakarta Sans</strong> for body copy. To replace them:</p>
+      <ul>
+        <li>Change the import URL at the top of <code>Template/css/base.css</code>.</li>
+        <li>Update the <code>--font-serif</code> and <code>--font-sans</code> variables in <code>Template/css/variables.css</code>.</li>
+      </ul>
+    </section>
+
+    <!-- Data Section -->
+    <section id="data">
+      <h2>Properties & Agents Data</h2>
+      <p>You do not need to edit complex HTML blocks to add, edit, or remove property listings or advisor profiles. All website data is loaded from <code>Template/js/data.js</code>.</p>
+      
+      <h3>1. Properties Array Format</h3>
+      <p>Each property in the <code>PROPERTIES_DATA</code> array has the following structure:</p>
+      <pre><code>{
+  id: "prop-01",
+  title: "The Obsidian Modern Villa",
+  type: "villa", // Match filter type: villa, penthouse, mansion, apartment
+  location: "Beverly Hills, CA",
+  price: 14500000,
+  beds: 6,
+  baths: 8,
+  area: 9200,
+  image: "assets/images/prop_villa.png", // Path to local asset
+  featured: true, // If true, displays in the Featured section
+  tag: "Exclusive", // Badge text
+  description: "An architectural tour de force..."
+}</code></pre>
+
+      <h3>2. Adding Your Own Images</h3>
+      <p>Save your property and agent images inside <code>Template/assets/images/</code> (optimized WebP or PNG format is highly recommended for speed), and update the <code>image</code> or <code>photo</code> paths in <code>Template/js/data.js</code> accordingly.</p>
+    </section>
+
+    <!-- SEO & Accessibility Section -->
+    <section id="seo">
+      <h2>SEO & Accessibility Best Practices</h2>
+      <p>Veridian Estates complies with modern SEO guidelines and meets **WCAG AA accessibility guidelines** out of the box.</p>
+
+      <h3>1. Structured Data (JSON-LD)</h3>
+      <p>The template includes a local schema markup tag in <code>Template/index.html</code>. Update it with your agency's phone number, address, and email coordinates so Google can index your business details:</p>
+      <pre><code>&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  "name": "Your Agency Name",
+  "image": "https://yourdomain.com/assets/images/hero_bg.png",
+  "telephone": "+18005559800",
+  ...
+}
+&lt;/script&gt;</code></pre>
+
+      <h3>2. Accessibility Focus Ring Styles</h3>
+      <p>Keyboard navigators will see a visible, outline ring when highlighting interactive links and buttons. Focus states are handled in <code>Template/css/base.css</code> under the <code>:focus-visible</code> rules.</p>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq">
+      <h2>Frequently Asked Questions</h2>
+      
+      <h3>Q: Can I use this template on multiple domains?</h3>
+      <p>A: A standard license allows deployment on **one single domain**. If you are building multiple client projects, you must purchase a separate license code for each site.</p>
+
+      <h3>Q: How do I hook up the form submissions to a real server?</h3>
+      <p>A: The form submits asynchronously to a mock timeout handler in <code>Template/js/app.js</code>. To send inquiries to your email box, change the form submission action or integrate a cloud mailing tool like Web3Forms, Netlify Forms, Formspree, or configure a backend script like PHP mailer:</p>
+      <pre><code>// Edit the initContactForms submit logic in js/app.js:
+// fetch("your-server-endpoint", { method: "POST", body: new FormData(form) })</code></pre>
+
+      <div class="alert alert-warning">
+        <strong>Important:</strong> Always escape user input variables if you are displaying submitted messages back to the screen to prevent script injection (XSS) risks.
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Navigation active styling helper -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const navLinks = document.querySelectorAll(".doc-nav-item");
+      const sections = document.querySelectorAll("section");
+
+      window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (pageYOffset >= (sectionTop - 120)) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove("active");
+          if (link.getAttribute("href").includes(current)) {
+            link.classList.add("active");
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

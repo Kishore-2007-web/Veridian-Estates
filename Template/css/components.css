@@ -623,6 +623,41 @@ body.modal-active {
   color: var(--primary);
 }
 
+/* Utilities and Custom Component Helpers */
+.btn-icon {
+  margin-right: var(--space-2);
+}
+
+.filter-panel-headline {
+  font-size: var(--fs-md);
+  margin-bottom: 0;
+}
+
+.price-slider-value {
+  font-weight: var(--fw-bold);
+  color: var(--primary);
+}
+
+.form-input[readonly] {
+  background-color: var(--bg-offset);
+  cursor: not-allowed;
+}
+
+/* Spinner Loader */
+.spinner {
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.spinner-path {
+  stroke-dasharray: 1, 150;
+  stroke-dashoffset: 0;
+  animation: dash 1.5s ease-in-out infinite;
+  stroke: currentColor;
+}
+
 /* CSS Keyframes Spinner */
 @keyframes spin {
   100% {

@@ -11,7 +11,21 @@ document.addEventListener("DOMContentLoaded", () => {
   initFilters();
   initInquiryModal();
   initContactForms();
+  initNewsletterForm();
 });
+
+/* ==========================================================
+   Security & Escaping Helpers
+   ========================================================== */
+function escapeHTML(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
 /* ==========================================================
    Mobile Navigation
@@ -85,12 +99,23 @@ function formatCurrency(number) {
 }
 
 function createPropertyCard(property) {
+  const safeId = escapeHTML(property.id);
+  const safeImage = escapeHTML(property.image);
+  const safeTitle = escapeHTML(property.title);
+  const safeTag = escapeHTML(property.tag);
+  const safeType = escapeHTML(property.type);
+  const safeLocation = escapeHTML(property.location);
+  const safePrice = formatCurrency(property.price);
+  const safeBeds = escapeHTML(property.beds);
+  const safeBaths = escapeHTML(property.baths);
+  const safeArea = property.area.toLocaleString();
+
   return `
-    <article class="property-card reveal" data-id="${property.id}">
+    <article class="property-card reveal" data-id="${safeId}">
       <div class="property-card-image-wrap">
-        <img src="${property.image}" alt="${property.title}" class="property-card-image" loading="lazy">
-        <span class="property-card-tag">${property.tag}</span>
-        <span class="property-card-type-badge">${property.type}</span>
+        <img src="${safeImage}" alt="${safeTitle}" class="property-card-image" loading="lazy">
+        <span class="property-card-tag">${safeTag}</span>
+        <span class="property-card-type-badge">${safeType}</span>
       </div>
       <div class="property-card-content">
         <p class="property-card-location">
@@ -98,26 +123,26 @@ function createPropertyCard(property) {
             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
             <circle cx="12" cy="10" r="3"></circle>
           </svg>
-          ${property.location}
+          ${safeLocation}
         </p>
-        <h3 class="property-card-title">${property.title}</h3>
-        <p class="property-card-price">${formatCurrency(property.price)}</p>
+        <h3 class="property-card-title">${safeTitle}</h3>
+        <p class="property-card-price">${safePrice}</p>
         <div class="property-card-specs">
           <div class="spec-item">
             <span class="spec-label">Beds</span>
-            <span class="spec-value">${property.beds}</span>
+            <span class="spec-value">${safeBeds}</span>
           </div>
           <div class="spec-item">
             <span class="spec-label">Baths</span>
-            <span class="spec-value">${property.baths}</span>
+            <span class="spec-value">${safeBaths}</span>
           </div>
           <div class="spec-item">
             <span class="spec-label">Area</span>
-            <span class="spec-value">${property.area.toLocaleString()} sq ft</span>
+            <span class="spec-value">${safeArea} sq ft</span>
           </div>
         </div>
         <div class="property-card-actions">
-          <button type="button" class="btn btn-secondary btn-full btn-inquire" data-prop-title="${property.title}">Inquire Now</button>
+          <button type="button" class="btn btn-secondary btn-full btn-inquire" data-prop-title="${safeTitle}">Inquire Now</button>
         </div>
       </div>
     </article>
@@ -173,33 +198,43 @@ function renderAgents() {
   const container = document.getElementById("agents-grid");
   if (!container) return;
 
-  container.innerHTML = AGENTS_DATA.map(agent => `
-    <article class="agent-card reveal">
-      <div class="agent-card-image-wrap">
-        <img src="${agent.photo}" alt="${agent.name}" class="agent-card-image" loading="lazy">
-      </div>
-      <div class="agent-card-content">
-        <h3 class="agent-name">${agent.name}</h3>
-        <p class="agent-role">${agent.role}</p>
-        <p class="agent-exp">${agent.experience}</p>
-        <div class="agent-contact-details">
-          <a href="mailto:${agent.email}" class="agent-contact-link">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-              <polyline points="22,6 12,13 2,6"></polyline>
-            </svg>
-            ${agent.email}
-          </a>
-          <a href="tel:${agent.phone.replace(/[^+\d]/g, '')}" class="agent-contact-link">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-            </svg>
-            ${agent.phone}
-          </a>
+  container.innerHTML = AGENTS_DATA.map(agent => {
+    const safePhoto = escapeHTML(agent.photo);
+    const safeName = escapeHTML(agent.name);
+    const safeRole = escapeHTML(agent.role);
+    const safeExp = escapeHTML(agent.experience);
+    const safeEmail = escapeHTML(agent.email);
+    const safePhone = escapeHTML(agent.phone);
+    const phoneClean = safePhone.replace(/[^+\d]/g, '');
+
+    return `
+      <article class="agent-card reveal">
+        <div class="agent-card-image-wrap">
+          <img src="${safePhoto}" alt="${safeName}" class="agent-card-image" loading="lazy">
         </div>
-      </div>
-    </article>
-  `).join("");
+        <div class="agent-card-content">
+          <h3 class="agent-name">${safeName}</h3>
+          <p class="agent-role">${safeRole}</p>
+          <p class="agent-exp">${safeExp}</p>
+          <div class="agent-contact-details">
+            <a href="mailto:${safeEmail}" class="agent-contact-link">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              ${safeEmail}
+            </a>
+            <a href="tel:${phoneClean}" class="agent-contact-link">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              ${safePhone}
+            </a>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join("");
 }
 
 /* ==========================================================
@@ -214,7 +249,7 @@ function initFilters() {
   const priceValue = document.getElementById("price-value");
   const btnReset = document.getElementById("btn-reset-filters");
 
-  if (!searchInput) return; // Quick search might exist or main filters
+  if (!searchInput) return;
 
   // Synchronize the slider display text
   priceRange.addEventListener("input", (e) => {
@@ -342,21 +377,28 @@ function initTestimonialsSlider() {
   const prevBtn = document.getElementById("testimonial-prev");
   const nextBtn = document.getElementById("testimonial-next");
   const indicators = document.getElementById("testimonial-indicators");
+  const section = document.getElementById("testimonials-section");
 
   if (!container || TESTIMONIALS_DATA.length === 0) return;
 
   let currentIndex = 0;
 
   // Render slides
-  container.innerHTML = TESTIMONIALS_DATA.map((t, idx) => `
-    <div class="testimonial-slide ${idx === 0 ? 'slide-active' : ''}" data-index="${idx}">
-      <p class="testimonial-quote">“${t.quote}”</p>
-      <div class="testimonial-author-info">
-        <span class="author-name">${t.author}</span>
-        <span class="author-title">${t.role} &middot; ${t.location}</span>
+  container.innerHTML = TESTIMONIALS_DATA.map((t, idx) => {
+    const safeQuote = escapeHTML(t.quote);
+    const safeAuthor = escapeHTML(t.author);
+    const safeRole = escapeHTML(t.role);
+    const safeLoc = escapeHTML(t.location);
+    return `
+      <div class="testimonial-slide ${idx === 0 ? 'slide-active' : ''}" data-index="${idx}">
+        <p class="testimonial-quote">“${safeQuote}”</p>
+        <div class="testimonial-author-info">
+          <span class="author-name">${safeAuthor}</span>
+          <span class="author-title">${safeRole} &middot; ${safeLoc}</span>
+        </div>
       </div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 
   // Render indicators
   indicators.innerHTML = TESTIMONIALS_DATA.map((_, idx) => `
@@ -390,6 +432,21 @@ function initTestimonialsSlider() {
       goToSlide(targetIndex);
     });
   });
+
+  // Keyboard navigation for slider (accessibility)
+  if (section) {
+    section.setAttribute("tabindex", "0");
+    section.setAttribute("aria-label", "Customer Testimonials. Use left and right arrow keys to navigate.");
+    section.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") {
+        goToSlide(currentIndex - 1);
+        resetAutoplay();
+      } else if (e.key === "ArrowRight") {
+        goToSlide(currentIndex + 1);
+        resetAutoplay();
+      }
+    });
+  }
 
   // Autoplay slider every 8 seconds
   let autoPlayTimer = setInterval(() => goToSlide(currentIndex + 1), 8000);
@@ -432,46 +489,57 @@ function initInquiryModal() {
   modal.addEventListener("click", (e) => {
     if (e.target === modal) closeModal(modal);
   });
+}
 
-  // Close on ESC
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modal.classList.contains("modal-open")) {
-      closeModal(modal);
+// Named function for modal keyboard navigation to avoid event listener buildup
+function handleModalKeydown(e) {
+  const modal = document.getElementById("inquiry-modal");
+  if (!modal || !modal.classList.contains("modal-open")) return;
+  
+  if (e.key === "Escape") {
+    closeModal(modal);
+    return;
+  }
+
+  if (e.key === 'Tab') {
+    const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex="0"]');
+    const firstFocusable = focusableElements[0];
+    const lastFocusable = focusableElements[focusableElements.length - 1];
+
+    if (e.shiftKey) { // Shift + Tab
+      if (document.activeElement === firstFocusable) {
+        lastFocusable.focus();
+        e.preventDefault();
+      }
+    } else { // Tab
+      if (document.activeElement === lastFocusable) {
+        firstFocusable.focus();
+        e.preventDefault();
+      }
     }
-  });
+  }
 }
 
 function openModal(modal) {
   modal.classList.add("modal-open");
   document.body.classList.add("modal-active");
   
-  // Focus trapping (Accessibility)
-  const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex="0"]');
-  const firstFocusable = focusableElements[0];
-  const lastFocusable = focusableElements[focusableElements.length - 1];
-
-  firstFocusable.focus();
-
-  modal.addEventListener('keydown', function(e) {
-    if (e.key === 'Tab') {
-      if (e.shiftKey) { // Shift + Tab
-        if (document.activeElement === firstFocusable) {
-          lastFocusable.focus();
-          e.preventDefault();
-        }
-      } else { // Tab
-        if (document.activeElement === lastFocusable) {
-          firstFocusable.focus();
-          e.preventDefault();
-        }
-      }
-    }
-  });
+  // Attach keydown focus trap listener
+  document.addEventListener('keydown', handleModalKeydown);
+  
+  // Set focus on first input element
+  const nameInput = document.getElementById("modal-name");
+  if (nameInput) {
+    nameInput.focus();
+  }
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal-open");
   document.body.classList.remove("modal-active");
+  
+  // Remove keydown focus trap listener
+  document.removeEventListener('keydown', handleModalKeydown);
   
   // Reset the form inside the modal
   const form = modal.querySelector("form");
@@ -589,8 +657,8 @@ function submitForm(form) {
   // Disable buttons & show loading
   submitBtn.disabled = true;
   submitBtn.innerHTML = `
-    <svg class="spinner" viewBox="0 0 50 50" width="20" height="20" style="animation: spin 1s linear infinite; margin-right: 8px; display: inline-block; vertical-align: middle;">
-      <circle class="path" cx="25" cy="25" r="20" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" style="stroke-dasharray: 1, 150; stroke-dashoffset: 0; animation: dash 1.5s ease-in-out infinite;"></circle>
+    <svg class="spinner" viewBox="0 0 50 50" width="20" height="20">
+      <circle class="spinner-path" cx="25" cy="25" r="20" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"></circle>
     </svg>
     Processing...
   `;
@@ -616,6 +684,23 @@ function submitForm(form) {
 }
 
 /* ==========================================================
+   Newsletter Subscription Handling
+   ========================================================== */
+function initNewsletterForm() {
+  const newsletterForm = document.querySelector(".newsletter-input-group");
+  if (!newsletterForm) return;
+
+  newsletterForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const emailInput = document.getElementById("newsletter-email");
+    if (emailInput && emailInput.value.trim()) {
+      showSuccessToast("Thank you! You have successfully subscribed to our newsletter.");
+      newsletterForm.reset();
+    }
+  });
+}
+
+/* ==========================================================
    Toast Notifications
    ========================================================== */
 function showSuccessToast(message) {
@@ -627,6 +712,8 @@ function showSuccessToast(message) {
     document.body.appendChild(container);
   }
 
+  const safeMessage = escapeHTML(message);
+
   const toast = document.createElement("div");
   toast.className = "toast toast-success";
   toast.innerHTML = `
@@ -637,7 +724,7 @@ function showSuccessToast(message) {
       </svg>
     </div>
     <div class="toast-content">
-      <p class="toast-message">${message}</p>
+      <p class="toast-message">${safeMessage}</p>
     </div>
     <button type="button" class="toast-close" aria-label="Close Notification">&times;</button>
   `;

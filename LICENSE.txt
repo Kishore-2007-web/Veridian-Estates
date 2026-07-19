@@ -1,0 +1,23 @@
+Veridian Estates Website Template License Agreement
+
+This license governs your use of the Veridian Estates Website Template. By downloading or purchasing the template, you agree to these terms.
+
+---
+
+## 1. Single Application License
+This license grants you a non-exclusive, non-transferable, worldwide right to use this template for one single project (such as a website for yourself or a client).
+
+## 2. Permitted Uses
+- You may customize the template files (HTML, CSS, JS, Assets) for your project.
+- You may use the template on one production domain and one development/staging environment.
+- You may modify branding, logos, graphics, and text to suit your requirements.
+
+## 3. Restrictions
+- You may NOT resell, distribute, sublicense, or share the template files (in original or modified form) on any marketplace, website, or offline storage.
+- You may NOT include this template in a website builder or multi-tenant SaaS service that lets end-users generate their own sites.
+- You may NOT claim authorship or copyright of the design patterns, layouts, or source code.
+- Photo assets included in the demo are copyrighted to their respective owners and are intended for demonstration purposes only (refer to CREDITS.md for details).
+
+---
+
+For support, custom licensing inquiries, or questions, contact concierge@veridianestates.com or visit our marketplace profile.

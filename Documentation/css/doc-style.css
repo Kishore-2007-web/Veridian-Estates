@@ -1,0 +1,199 @@
+/* Documentation custom stylesheet */
+:root {
+  --primary: #0f172a;
+  --accent: #c5a880;
+  --accent-dark: #9f825c;
+  --text: #334155;
+  --text-light: #64748b;
+  --bg: #ffffff;
+  --bg-sidebar: #f8fafc;
+  --border: #e2e8f0;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Fira Code', monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--text);
+  background-color: var(--bg);
+  line-height: 1.7;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Layout */
+.doc-sidebar {
+  width: 280px;
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+  padding: 2.5rem 1.5rem;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.doc-main {
+  margin-left: 280px;
+  flex: 1;
+  padding: 3rem 4rem;
+  max-width: 900px;
+}
+
+/* Sidebar Branding & Nav Links */
+.doc-brand {
+  margin-bottom: 2.5rem;
+}
+
+.doc-brand h2 {
+  font-size: 1.25rem;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.doc-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.doc-nav-item {
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.doc-nav-item:hover,
+.doc-nav-item.active {
+  color: var(--primary);
+  background-color: var(--border);
+}
+
+/* Typography */
+h1 {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 1.75rem;
+  color: var(--primary);
+  margin-top: 3rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+h3 {
+  font-size: 1.25rem;
+  color: var(--primary);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+p {
+  margin-bottom: 1.5rem;
+}
+
+ul {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+/* Code highlight */
+pre {
+  background-color: var(--primary);
+  color: #f8fafc;
+  padding: 1.25rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+code {
+  font-family: var(--font-mono);
+  background-color: var(--bg-sidebar);
+  color: var(--primary);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* Alert Boxes */
+.alert {
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  border-left: 4px solid var(--accent);
+  background-color: var(--bg-sidebar);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.alert-warning {
+  border-left-color: #ef4444;
+  background-color: #fef2f2;
+  color: #991b1b;
+}
+
+/* Responsive Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+th, td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  background-color: var(--bg-sidebar);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+  .doc-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 1.5rem;
+  }
+  .doc-main {
+    margin-left: 0;
+    padding: 2rem 1.5rem;
+  }
+}

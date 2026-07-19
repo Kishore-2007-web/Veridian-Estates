@@ -23,8 +23,10 @@
   --bg-card: #FFFFFF;
   --border-color: #E2E8F0;       /* Slate 200 */
   
-  --success: #10B981;            /* Emerald 500 */
-  --error: #EF4444;              /* Red 500 */
+  --success-rgb: 16, 185, 129;   /* Emerald 500 */
+  --success: rgb(var(--success-rgb));
+  --error-rgb: 239, 68, 68;      /* Red 500 */
+  --error: rgb(var(--error-rgb));
   
   /* Fonts */
   --font-serif: 'Playfair Display', Georgia, serif;

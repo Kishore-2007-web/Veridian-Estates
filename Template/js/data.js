@@ -2,14 +2,14 @@
 const PROPERTIES_DATA = [
   {
     id: "prop-01",
-    title: "The Obsidian modern Villa",
+    title: "The Obsidian Modern Villa",
     type: "villa",
     location: "Beverly Hills, CA",
     price: 14500000,
     beds: 6,
     baths: 8,
     area: 9200,
-    image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80",
+    image: "assets/images/prop_villa.png",
     featured: true,
     tag: "Exclusive",
     description: "An architectural tour de force, this ultra-modern villa is situated on a private promontory offering panoramic ocean and city views. Features soaring ceiling heights, an infinity edge pool, and fully automated smart home systems."
@@ -23,7 +23,7 @@ const PROPERTIES_DATA = [
     beds: 4,
     baths: 5,
     area: 5400,
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
+    image: "assets/images/prop_penthouse.png",
     featured: true,
     tag: "New Release",
     description: "Suspended high above the Atlantic ocean, this stunning penthouse features private elevator entry, wrapping glass terraces, a rooftop dip pool, and custom millwork throughout by Italian designers."
@@ -37,7 +37,7 @@ const PROPERTIES_DATA = [
     beds: 7,
     baths: 9,
     area: 12400,
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+    image: "assets/images/prop_mansion.png",
     featured: true,
     tag: "Price Upon Request",
     description: "A mountain retreat unlike any other. Designed with natural stone, steel, and timber, this expansive estate offers direct ski-in/ski-out access, a 500-bottle wine cellar, private wellness spa, and spectacular alpine vistas."
@@ -51,7 +51,7 @@ const PROPERTIES_DATA = [
     beds: 3,
     baths: 3.5,
     area: 3200,
-    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
+    image: "assets/images/prop_apartment.png",
     featured: false,
     tag: "Classic Style",
     description: "Meticulously restored duplex apartment in the heart of Chelsea. Boasts original exposed brickwork, a private landscaped courtyard, professional chef's kitchen, and high ceilings."
@@ -65,7 +65,7 @@ const PROPERTIES_DATA = [
     beds: 5,
     baths: 6,
     area: 7800,
-    image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80",
+    image: "assets/images/prop_villa.png",
     featured: false,
     tag: "Beachfront",
     description: "Perched steps away from sandy Malibu beach, this organic modern villa blends indoor and outdoor luxury living seamlessly. Includes pocket sliding glass doors, a heated lap pool, and a private path to the beach."
@@ -79,7 +79,7 @@ const PROPERTIES_DATA = [
     beds: 5,
     baths: 6.5,
     area: 8400,
-    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
+    image: "assets/images/prop_mansion.png",
     featured: false,
     tag: "Mid-Century Modern",
     description: "Designed by renowned architect William Wurster, this Pacific Heights residence has been completely modernized while retaining its mid-century heritage. Panoramic Golden Gate Bridge views."
@@ -93,7 +93,7 @@ const PROPERTIES_DATA = [
     beds: 3,
     baths: 4,
     area: 4100,
-    image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80",
+    image: "assets/images/prop_penthouse.png",
     featured: false,
     tag: "Newly Decorated",
     description: "A bright, coastal-inspired penthouse featuring a private terrace hot tub, custom white oak flooring, smart lighting, and 360-degree bay views. Includes full hotel-style concierge service access."
@@ -107,7 +107,7 @@ const PROPERTIES_DATA = [
     beds: 2,
     baths: 2,
     area: 1900,
-    image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
+    image: "assets/images/prop_apartment.png",
     featured: false,
     tag: "Minimalist",
     description: "A sleek, minimalist retreat high above Tribeca. Fully customized built-in storage, heated basalt bathroom floors, premium Miele appliances, and light-filled rooms with floor-to-ceiling windows."
@@ -120,7 +120,7 @@ const AGENTS_DATA = [
     name: "Sarah Jenkins",
     role: "Founder & Principal Broker",
     experience: "18 Years Experience",
-    photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&h=400&q=80",
+    photo: "assets/images/agent_sarah.png",
     email: "s.jenkins@veridianestates.com",
     phone: "+1 (310) 555-0190"
   },
@@ -129,7 +129,7 @@ const AGENTS_DATA = [
     name: "Marcus Vance",
     role: "Director of Luxury Residential",
     experience: "12 Years Experience",
-    photo: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&h=400&q=80",
+    photo: "assets/images/agent_marcus.png",
     email: "m.vance@veridianestates.com",
     phone: "+1 (212) 555-0144"
   },
@@ -138,7 +138,7 @@ const AGENTS_DATA = [
     name: "Elena Rostova",
     role: "International Client Advisor",
     experience: "10 Years Experience",
-    photo: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&h=400&q=80",
+    photo: "assets/images/agent_elena.png",
     email: "e.rostova@veridianestates.com",
     phone: "+1 (305) 555-0177"
   }
