@@ -1,7 +1,9 @@
-/* js/app.js */
+/* ==========================================================
+   js/app.js — Production-Grade Application Interactions
+   ========================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Initializations
+  // Initialization of application modules
   initMobileNav();
   initRevealAnimations();
   renderFeaturedProperties();
@@ -28,42 +30,81 @@ function escapeHTML(str) {
 }
 
 /* ==========================================================
-   Mobile Navigation
+   Mobile Navigation & Drawer
    ========================================================== */
 function initMobileNav() {
   const menuToggle = document.getElementById("menu-toggle");
   const navLinks = document.getElementById("nav-links");
+  const navBackdrop = document.getElementById("nav-backdrop");
   const header = document.querySelector(".header");
 
   if (!menuToggle || !navLinks) return;
 
+  function openMenu() {
+    menuToggle.setAttribute("aria-expanded", "true");
+    navLinks.classList.add("nav-active");
+    menuToggle.classList.add("toggle-active");
+    if (navBackdrop) {
+      navBackdrop.classList.add("active");
+      navBackdrop.setAttribute("aria-hidden", "false");
+    }
+    document.body.classList.add("body-scroll-lock");
+  }
+
+  function closeMenu() {
+    menuToggle.setAttribute("aria-expanded", "false");
+    navLinks.classList.remove("nav-active");
+    menuToggle.classList.remove("toggle-active");
+    if (navBackdrop) {
+      navBackdrop.classList.remove("active");
+      navBackdrop.setAttribute("aria-hidden", "true");
+    }
+    document.body.classList.remove("body-scroll-lock");
+  }
+
   menuToggle.addEventListener("click", () => {
     const isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
-    menuToggle.setAttribute("aria-expanded", !isExpanded);
-    navLinks.classList.toggle("nav-active");
-    menuToggle.classList.toggle("toggle-active");
-    document.body.classList.toggle("nav-open");
+    if (isExpanded) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
   });
 
-  // Close menu when clicking a link
+  // Backdrop click dismiss
+  if (navBackdrop) {
+    navBackdrop.addEventListener("click", closeMenu);
+  }
+
+  // Close menu when clicking any nav link
   const links = navLinks.querySelectorAll("a");
   links.forEach(link => {
-    link.addEventListener("click", () => {
-      menuToggle.setAttribute("aria-expanded", "false");
-      navLinks.classList.remove("nav-active");
-      menuToggle.classList.remove("toggle-active");
-      document.body.classList.remove("nav-open");
-    });
+    link.addEventListener("click", closeMenu);
   });
 
-  // Sticky nav styling on scroll
+  // Escape key closes mobile navigation
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && navLinks.classList.contains("nav-active")) {
+      closeMenu();
+      menuToggle.focus();
+    }
+  });
+
+  // Automatically reset mobile nav if window expands beyond mobile breakpoint
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 1024 && navLinks.classList.contains("nav-active")) {
+      closeMenu();
+    }
+  }, { passive: true });
+
+  // Sticky nav elevation styling on scroll
   window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
+    if (window.scrollY > 30) {
       header.classList.add("header-scrolled");
     } else {
       header.classList.remove("header-scrolled");
     }
-  });
+  }, { passive: true });
 }
 
 /* ==========================================================
@@ -72,16 +113,22 @@ function initMobileNav() {
 function initRevealAnimations() {
   const revealElements = document.querySelectorAll(".reveal");
   
-  const observer = new IntersectionObserver((entries, observer) => {
+  if (!('IntersectionObserver' in window)) {
+    // Fallback for older browsers
+    revealElements.forEach(el => el.classList.add("active"));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries, observerInstance) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("active");
-        observer.unobserve(entry.target); // Animates once
+        observerInstance.unobserve(entry.target);
       }
     });
   }, {
-    threshold: 0.15,
-    rootMargin: "0px 0px -50px 0px"
+    threshold: 0.12,
+    rootMargin: "0px 0px -40px 0px"
   });
 
   revealElements.forEach(el => observer.observe(el));
@@ -113,17 +160,17 @@ function createPropertyCard(property) {
   return `
     <article class="property-card reveal" data-id="${safeId}">
       <div class="property-card-image-wrap">
-        <img src="${safeImage}" alt="${safeTitle}" class="property-card-image" loading="lazy">
+        <img src="${safeImage}" alt="${safeTitle}" class="property-card-image" loading="lazy" width="600" height="375">
         <span class="property-card-tag">${safeTag}</span>
         <span class="property-card-type-badge">${safeType}</span>
       </div>
       <div class="property-card-content">
         <p class="property-card-location">
-          <svg class="icon-location" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
             <circle cx="12" cy="10" r="3"></circle>
           </svg>
-          ${safeLocation}
+          <span>${safeLocation}</span>
         </p>
         <h3 class="property-card-title">${safeTitle}</h3>
         <p class="property-card-price">${safePrice}</p>
@@ -170,13 +217,13 @@ function renderAllProperties(properties) {
   if (properties.length === 0) {
     container.innerHTML = `
       <div class="no-results">
-        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
         <h3>No Properties Found</h3>
         <p>We couldn't find any listings matching your search criteria. Try adjusting your filters.</p>
-        <button id="btn-reset-filters-inner" class="btn btn-primary mt-4">Reset Filters</button>
+        <button id="btn-reset-filters-inner" class="btn btn-primary" type="button">Reset All Filters</button>
       </div>
     `;
     const innerReset = document.getElementById("btn-reset-filters-inner");
@@ -187,7 +234,6 @@ function renderAllProperties(properties) {
   }
 
   container.innerHTML = properties.map(createPropertyCard).join("");
-  // Re-run animation observer on newly injected elements
   initRevealAnimations();
 }
 
@@ -210,25 +256,25 @@ function renderAgents() {
     return `
       <article class="agent-card reveal">
         <div class="agent-card-image-wrap">
-          <img src="${safePhoto}" alt="${safeName}" class="agent-card-image" loading="lazy">
+          <img src="${safePhoto}" alt="${safeName}" class="agent-card-image" loading="lazy" width="400" height="400">
         </div>
         <div class="agent-card-content">
           <h3 class="agent-name">${safeName}</h3>
           <p class="agent-role">${safeRole}</p>
           <p class="agent-exp">${safeExp}</p>
           <div class="agent-contact-details">
-            <a href="mailto:${safeEmail}" class="agent-contact-link">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <a href="mailto:${safeEmail}" class="agent-contact-link" aria-label="Send email to ${safeName}">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                 <polyline points="22,6 12,13 2,6"></polyline>
               </svg>
-              ${safeEmail}
+              <span>${safeEmail}</span>
             </a>
-            <a href="tel:${phoneClean}" class="agent-contact-link">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <a href="tel:${phoneClean}" class="agent-contact-link" aria-label="Call ${safeName}">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
               </svg>
-              ${safePhone}
+              <span>${safePhone}</span>
             </a>
           </div>
         </div>
@@ -249,12 +295,12 @@ function initFilters() {
   const priceValue = document.getElementById("price-value");
   const btnReset = document.getElementById("btn-reset-filters");
 
-  if (!searchInput) return;
+  if (!searchInput || !priceRange) return;
 
-  // Synchronize the slider display text
+  // Synchronize slider display text
   priceRange.addEventListener("input", (e) => {
-    const val = parseInt(e.target.value);
-    if (val === 20000000) {
+    const val = parseInt(e.target.value, 10);
+    if (val >= 20000000) {
       priceValue.textContent = "Any Budget";
     } else {
       priceValue.textContent = formatCurrency(val);
@@ -264,9 +310,9 @@ function initFilters() {
 
   // Attach search listeners
   searchInput.addEventListener("input", debounceFilter);
-  typeSelect.addEventListener("change", applyFilters);
-  bedsSelect.addEventListener("change", applyFilters);
-  btnReset.addEventListener("click", resetAllFilters);
+  if (typeSelect) typeSelect.addEventListener("change", applyFilters);
+  if (bedsSelect) bedsSelect.addEventListener("change", applyFilters);
+  if (btnReset) btnReset.addEventListener("click", resetAllFilters);
 
   // Quick search handles in hero section
   const heroSearchInput = document.getElementById("hero-search-input");
@@ -275,11 +321,9 @@ function initFilters() {
 
   if (heroSearchBtn) {
     heroSearchBtn.addEventListener("click", () => {
-      // Sync parameters to main filter controls
-      if (heroSearchInput) searchInput.value = heroSearchInput.value;
-      if (heroTypeSelect) typeSelect.value = heroTypeSelect.value;
+      if (heroSearchInput && searchInput) searchInput.value = heroSearchInput.value;
+      if (heroTypeSelect && typeSelect) typeSelect.value = heroTypeSelect.value;
       
-      // Scroll to property catalog smoothly
       const target = document.getElementById("listings-section");
       if (target) {
         target.scrollIntoView({ behavior: "smooth" });
@@ -292,7 +336,7 @@ function initFilters() {
 
 function debounceFilter() {
   clearTimeout(searchTimeout);
-  searchTimeout = setTimeout(applyFilters, 300);
+  searchTimeout = setTimeout(applyFilters, 220);
 }
 
 function applyFilters() {
@@ -302,31 +346,30 @@ function applyFilters() {
   const priceRange = document.getElementById("price-range");
   const container = document.getElementById("all-properties-grid");
 
-  if (!searchInput) return;
+  if (!searchInput || !container) return;
 
   const query = searchInput.value.toLowerCase().trim();
-  const type = typeSelect.value;
-  const beds = bedsSelect.value;
-  const maxPrice = parseInt(priceRange.value);
+  const type = typeSelect ? typeSelect.value : "";
+  const beds = bedsSelect ? bedsSelect.value : "";
+  const maxPrice = priceRange ? parseInt(priceRange.value, 10) : 20000000;
 
-  // Filter listings
   const filtered = PROPERTIES_DATA.filter(property => {
     // Search by title or location
     const matchesQuery = !query || 
       property.title.toLowerCase().includes(query) || 
       property.location.toLowerCase().includes(query);
     
-    // Search by type
+    // Search by property type
     const matchesType = !type || property.type === type;
     
-    // Search by bedrooms (if select value is "4+", match >= 4, else exact match)
+    // Search by bedrooms
     let matchesBeds = true;
     if (beds) {
       if (beds.endsWith("+")) {
-        const threshold = parseInt(beds);
+        const threshold = parseInt(beds, 10);
         matchesBeds = property.beds >= threshold;
       } else {
-        matchesBeds = property.beds === parseInt(beds);
+        matchesBeds = property.beds === parseInt(beds, 10);
       }
     }
 
@@ -336,13 +379,13 @@ function applyFilters() {
     return matchesQuery && matchesType && matchesBeds && matchesPrice;
   });
 
-  // Visual feedback for filter calculation (shimmer / loading state)
+  // Smooth filter transition
   container.classList.add("filtering");
   
   setTimeout(() => {
     renderAllProperties(filtered);
     container.classList.remove("filtering");
-  }, 250);
+  }, 160);
 }
 
 function resetAllFilters() {
@@ -352,15 +395,12 @@ function resetAllFilters() {
   const priceRange = document.getElementById("price-range");
   const priceValue = document.getElementById("price-value");
 
-  if (!searchInput) return;
+  if (searchInput) searchInput.value = "";
+  if (typeSelect) typeSelect.value = "";
+  if (bedsSelect) bedsSelect.value = "";
+  if (priceRange) priceRange.value = "20000000";
+  if (priceValue) priceValue.textContent = "Any Budget";
 
-  searchInput.value = "";
-  typeSelect.value = "";
-  bedsSelect.value = "";
-  priceRange.value = 20000000;
-  priceValue.textContent = "Any Budget";
-
-  // Also reset quick search inputs
   const heroSearchInput = document.getElementById("hero-search-input");
   const heroTypeSelect = document.getElementById("hero-type-select");
   if (heroSearchInput) heroSearchInput.value = "";
@@ -370,7 +410,7 @@ function resetAllFilters() {
 }
 
 /* ==========================================================
-   Testimonials Slider
+   Testimonials Slider & Touch Gestures
    ========================================================== */
 function initTestimonialsSlider() {
   const container = document.getElementById("testimonials-slider-content");
@@ -383,14 +423,14 @@ function initTestimonialsSlider() {
 
   let currentIndex = 0;
 
-  // Render slides
+  // Render slides in CSS Grid stack
   container.innerHTML = TESTIMONIALS_DATA.map((t, idx) => {
     const safeQuote = escapeHTML(t.quote);
     const safeAuthor = escapeHTML(t.author);
     const safeRole = escapeHTML(t.role);
     const safeLoc = escapeHTML(t.location);
     return `
-      <div class="testimonial-slide ${idx === 0 ? 'slide-active' : ''}" data-index="${idx}">
+      <div class="testimonial-slide ${idx === 0 ? 'slide-active' : ''}" data-index="${idx}" role="group" aria-roledescription="slide" aria-label="${idx + 1} of ${TESTIMONIALS_DATA.length}">
         <p class="testimonial-quote">“${safeQuote}”</p>
         <div class="testimonial-author-info">
           <span class="author-name">${safeAuthor}</span>
@@ -401,39 +441,63 @@ function initTestimonialsSlider() {
   }).join("");
 
   // Render indicators
-  indicators.innerHTML = TESTIMONIALS_DATA.map((_, idx) => `
-    <button type="button" class="indicator-dot ${idx === 0 ? 'indicator-active' : ''}" data-index="${idx}" aria-label="Go to testimonial slide ${idx + 1}"></button>
-  `).join("");
+  if (indicators) {
+    indicators.innerHTML = TESTIMONIALS_DATA.map((_, idx) => `
+      <button type="button" class="indicator-dot ${idx === 0 ? 'indicator-active' : ''}" data-index="${idx}" aria-label="Go to testimonial slide ${idx + 1}"></button>
+    `).join("");
+  }
 
   const slides = container.querySelectorAll(".testimonial-slide");
-  const dots = indicators.querySelectorAll(".indicator-dot");
+  const dots = indicators ? indicators.querySelectorAll(".indicator-dot") : [];
 
   function goToSlide(index) {
-    // Handle wrap around
     if (index >= TESTIMONIALS_DATA.length) index = 0;
     if (index < 0) index = TESTIMONIALS_DATA.length - 1;
 
-    // Toggle active classes
     slides[currentIndex].classList.remove("slide-active");
-    dots[currentIndex].classList.remove("indicator-active");
+    if (dots[currentIndex]) dots[currentIndex].classList.remove("indicator-active");
 
     currentIndex = index;
 
     slides[currentIndex].classList.add("slide-active");
-    dots[currentIndex].classList.add("indicator-active");
+    if (dots[currentIndex]) dots[currentIndex].classList.add("indicator-active");
   }
 
-  prevBtn.addEventListener("click", () => goToSlide(currentIndex - 1));
-  nextBtn.addEventListener("click", () => goToSlide(currentIndex + 1));
+  if (prevBtn) prevBtn.addEventListener("click", () => goToSlide(currentIndex - 1));
+  if (nextBtn) nextBtn.addEventListener("click", () => goToSlide(currentIndex + 1));
 
   dots.forEach(dot => {
     dot.addEventListener("click", (e) => {
-      const targetIndex = parseInt(e.target.getAttribute("data-index"));
+      const targetIndex = parseInt(e.target.getAttribute("data-index"), 10);
       goToSlide(targetIndex);
     });
   });
 
-  // Keyboard navigation for slider (accessibility)
+  // Touch swipe support for mobile users
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  container.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  container.addEventListener("touchend", (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+
+  function handleSwipe() {
+    const swipeThreshold = 40;
+    if (touchEndX < touchStartX - swipeThreshold) {
+      goToSlide(currentIndex + 1);
+      resetAutoplay();
+    } else if (touchEndX > touchStartX + swipeThreshold) {
+      goToSlide(currentIndex - 1);
+      resetAutoplay();
+    }
+  }
+
+  // Keyboard navigation for accessibility
   if (section) {
     section.setAttribute("tabindex", "0");
     section.setAttribute("aria-label", "Customer Testimonials. Use left and right arrow keys to navigate.");
@@ -448,23 +512,24 @@ function initTestimonialsSlider() {
     });
   }
 
-  // Autoplay slider every 8 seconds
-  let autoPlayTimer = setInterval(() => goToSlide(currentIndex + 1), 8000);
+  // Autoplay slider every 7.5 seconds
+  let autoPlayTimer = setInterval(() => goToSlide(currentIndex + 1), 7500);
 
-  // Clear timer when user interacts
   const resetAutoplay = () => {
     clearInterval(autoPlayTimer);
-    autoPlayTimer = setInterval(() => goToSlide(currentIndex + 1), 8000);
+    autoPlayTimer = setInterval(() => goToSlide(currentIndex + 1), 7500);
   };
 
-  prevBtn.addEventListener("click", resetAutoplay);
-  nextBtn.addEventListener("click", resetAutoplay);
+  if (prevBtn) prevBtn.addEventListener("click", resetAutoplay);
+  if (nextBtn) nextBtn.addEventListener("click", resetAutoplay);
   dots.forEach(dot => dot.addEventListener("click", resetAutoplay));
 }
 
 /* ==========================================================
-   Inquiry Modal Pre-fill & Controls
+   Inquiry Modal Controls & Focus Management
    ========================================================== */
+let lastActiveElement = null;
+
 function initInquiryModal() {
   const modal = document.getElementById("inquiry-modal");
   const closeModalBtn = document.getElementById("modal-close");
@@ -472,10 +537,11 @@ function initInquiryModal() {
   
   if (!modal) return;
 
-  // Open modal handler (delegated listener on both listings section & featured section)
+  // Delegated open listener on "Inquire Now" buttons
   document.addEventListener("click", (e) => {
     const btn = e.target.closest(".btn-inquire");
     if (btn) {
+      lastActiveElement = btn;
       const propTitle = btn.getAttribute("data-prop-title");
       if (modalPropertyInput && propTitle) {
         modalPropertyInput.value = propTitle;
@@ -484,14 +550,15 @@ function initInquiryModal() {
     }
   });
 
-  // Close modal click listeners
-  closeModalBtn.addEventListener("click", () => closeModal(modal));
+  if (closeModalBtn) {
+    closeModalBtn.addEventListener("click", () => closeModal(modal));
+  }
+
   modal.addEventListener("click", (e) => {
     if (e.target === modal) closeModal(modal);
   });
 }
 
-// Named function for modal keyboard navigation to avoid event listener buildup
 function handleModalKeydown(e) {
   const modal = document.getElementById("inquiry-modal");
   if (!modal || !modal.classList.contains("modal-open")) return;
@@ -503,15 +570,17 @@ function handleModalKeydown(e) {
 
   if (e.key === 'Tab') {
     const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex="0"]');
+    if (focusableElements.length === 0) return;
+
     const firstFocusable = focusableElements[0];
     const lastFocusable = focusableElements[focusableElements.length - 1];
 
-    if (e.shiftKey) { // Shift + Tab
+    if (e.shiftKey) {
       if (document.activeElement === firstFocusable) {
         lastFocusable.focus();
         e.preventDefault();
       }
-    } else { // Tab
+    } else {
       if (document.activeElement === lastFocusable) {
         firstFocusable.focus();
         e.preventDefault();
@@ -522,35 +591,35 @@ function handleModalKeydown(e) {
 
 function openModal(modal) {
   modal.classList.add("modal-open");
-  document.body.classList.add("modal-active");
+  document.body.classList.add("body-scroll-lock");
   
-  // Attach keydown focus trap listener
   document.addEventListener('keydown', handleModalKeydown);
   
-  // Set focus on first input element
   const nameInput = document.getElementById("modal-name");
   if (nameInput) {
-    nameInput.focus();
+    setTimeout(() => nameInput.focus(), 60);
   }
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal-open");
-  document.body.classList.remove("modal-active");
+  document.body.classList.remove("body-scroll-lock");
   
-  // Remove keydown focus trap listener
   document.removeEventListener('keydown', handleModalKeydown);
   
-  // Reset the form inside the modal
   const form = modal.querySelector("form");
   if (form) {
     form.reset();
     clearFormErrors(form);
   }
+
+  if (lastActiveElement) {
+    lastActiveElement.focus();
+  }
 }
 
 /* ==========================================================
-   Forms Validations and Mock Submissions
+   Form Validations & Submissions
    ========================================================== */
 function initContactForms() {
   const forms = document.querySelectorAll(".inquiry-form-element");
@@ -564,7 +633,6 @@ function initContactForms() {
       }
     });
 
-    // Real-time input cleaning / field errors clearing
     const inputs = form.querySelectorAll("input, select, textarea");
     inputs.forEach(input => {
       input.addEventListener("input", () => {
@@ -607,17 +675,17 @@ function validateForm(form) {
     }
   }
 
-  // Phone Validation (Optional, but if entered must match general phone format)
+  // Optional Phone Validation
   if (phoneInput && phoneInput.value.trim()) {
     const val = phoneInput.value.trim();
     const phoneRegex = /^[+]?[0-9\s\-()]{7,20}$/;
     if (!phoneRegex.test(val)) {
-      showError(phoneInput, "Please enter a valid contact phone number.");
+      showError(phoneInput, "Please enter a valid phone number.");
       isValid = false;
     }
   }
 
-  // Message validation
+  // Message Validation
   if (messageInput && !messageInput.value.trim()) {
     showError(messageInput, "Please write a message explaining your inquiry.");
     isValid = false;
@@ -654,37 +722,30 @@ function submitForm(form) {
   const submitBtn = form.querySelector('button[type="submit"]');
   const originalText = submitBtn.innerHTML;
 
-  // Disable buttons & show loading
   submitBtn.disabled = true;
   submitBtn.innerHTML = `
-    <svg class="spinner" viewBox="0 0 50 50" width="20" height="20">
+    <svg class="spinner" viewBox="0 0 50 50" width="18" height="18" aria-hidden="true">
       <circle class="spinner-path" cx="25" cy="25" r="20" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"></circle>
     </svg>
-    Processing...
+    <span>Processing...</span>
   `;
 
-  // Simulate server communication latency
   setTimeout(() => {
-    // Restore button
     submitBtn.disabled = false;
     submitBtn.innerHTML = originalText;
-
-    // Reset Form
     form.reset();
 
-    // Show success dialog / toast message
     showSuccessToast("Thank you. Your inquiry has been sent to our concierge desk. We will contact you shortly.");
 
-    // Close modal if open
     const modal = document.getElementById("inquiry-modal");
     if (modal && modal.classList.contains("modal-open")) {
       closeModal(modal);
     }
-  }, 2000);
+  }, 1000);
 }
 
 /* ==========================================================
-   Newsletter Subscription Handling
+   Newsletter Subscription
    ========================================================== */
 function initNewsletterForm() {
   const newsletterForm = document.querySelector(".newsletter-input-group");
@@ -694,7 +755,7 @@ function initNewsletterForm() {
     e.preventDefault();
     const emailInput = document.getElementById("newsletter-email");
     if (emailInput && emailInput.value.trim()) {
-      showSuccessToast("Thank you! You have successfully subscribed to our newsletter.");
+      showSuccessToast("Thank you! You have successfully subscribed to our luxury property newsletter.");
       newsletterForm.reset();
     }
   });
@@ -704,7 +765,6 @@ function initNewsletterForm() {
    Toast Notifications
    ========================================================== */
 function showSuccessToast(message) {
-  // Check if toast container already exists, if not create
   let container = document.getElementById("toast-container");
   if (!container) {
     container = document.createElement("div");
@@ -716,9 +776,10 @@ function showSuccessToast(message) {
 
   const toast = document.createElement("div");
   toast.className = "toast toast-success";
+  toast.setAttribute("role", "status");
   toast.innerHTML = `
     <div class="toast-icon">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
         <polyline points="22 4 12 14.01 9 11.01"></polyline>
       </svg>
@@ -726,23 +787,20 @@ function showSuccessToast(message) {
     <div class="toast-content">
       <p class="toast-message">${safeMessage}</p>
     </div>
-    <button type="button" class="toast-close" aria-label="Close Notification">&times;</button>
+    <button type="button" class="toast-close" aria-label="Close notification">&times;</button>
   `;
 
   container.appendChild(toast);
 
-  // Trigger browser paint to slide in
-  setTimeout(() => {
+  requestAnimationFrame(() => {
     toast.classList.add("toast-show");
-  }, 10);
+  });
 
   const closeToast = () => {
     toast.classList.remove("toast-show");
-    setTimeout(() => toast.remove(), 300);
+    setTimeout(() => toast.remove(), 250);
   };
 
   toast.querySelector(".toast-close").addEventListener("click", closeToast);
-
-  // Auto remove after 5 seconds
-  setTimeout(closeToast, 5000);
+  setTimeout(closeToast, 4500);
 }

@@ -1,159 +1,232 @@
-/* css/base.css */
+/* ==========================================================
+   css/base.css — Typography, Core Resets & Global System
+   ========================================================== */
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
+/* Universal Resets */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  min-width: 0; /* Prevents flex and grid items from overflowing parent containers */
 }
 
 html {
   font-size: 16px;
   scroll-behavior: smooth;
-  scroll-padding-top: 80px; /* offset for sticky navbar */
+  scroll-padding-top: calc(var(--header-height-fluid) + 1rem);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
   font-family: var(--font-sans);
   font-size: var(--fs-base);
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--text);
   background-color: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
-/* Typography */
+/* Typography Hierarchy */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
   color: var(--text-dark);
   font-weight: var(--fw-semibold);
-  line-height: 1.25;
+  line-height: 1.2;
   margin-bottom: var(--space-4);
+  letter-spacing: -0.015em;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 h1 {
-  font-size: var(--fs-3xl);
+  font-size: var(--fs-4xl);
+  font-weight: var(--fw-bold);
+  line-height: 1.15;
 }
 
 h2 {
-  font-size: var(--fs-2xl);
+  font-size: var(--fs-3xl);
+  line-height: 1.2;
 }
 
 h3 {
+  font-size: var(--fs-2xl);
+  line-height: 1.25;
+}
+
+h4 {
   font-size: var(--fs-xl);
+  line-height: 1.3;
+}
+
+h5 {
+  font-size: var(--fs-lg);
+}
+
+h6 {
+  font-size: var(--fs-md);
 }
 
 p {
   margin-bottom: var(--space-4);
   color: var(--text-light);
+  font-size: var(--fs-base);
+  line-height: 1.7;
+  max-width: 72ch;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 a {
   color: inherit;
   text-decoration: none;
-  transition: color var(--transition-fast), border-color var(--transition-fast);
+  transition: color var(--transition-fast), border-color var(--transition-fast), opacity var(--transition-fast);
 }
 
-img {
+/* Media Resets */
+img, picture, svg, video, canvas {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
+/* Form Controls Baseline */
 button, input, textarea, select {
   font-family: inherit;
   font-size: inherit;
   color: inherit;
+  line-height: inherit;
   background: none;
   border: none;
 }
 
 button {
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 ul, ol {
   list-style: none;
 }
 
-/* Layout Utilities */
+/* Global Content Containers */
 .container {
-  width: 100%;
-  max-width: var(--container-max-width);
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: var(--space-6);
-  padding-right: var(--space-6);
+  width: min(100% - (2 * var(--space-container-pad)), var(--container-max-width));
+  margin-inline: auto;
 }
 
+.container-narrow {
+  width: min(100% - (2 * var(--space-container-pad)), var(--container-narrow));
+  margin-inline: auto;
+}
+
+/* Fluid Section Spacing */
 .section {
-  padding-top: var(--space-16);
-  padding-bottom: var(--space-16);
+  padding-top: var(--space-section);
+  padding-bottom: var(--space-section);
+  position: relative;
 }
 
 .section-offset {
   background-color: var(--bg-offset);
 }
 
+.pt-0 {
+  padding-top: 0 !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.mt-4 {
+  margin-top: var(--space-4) !important;
+}
+
 .section-header {
   text-align: center;
-  max-width: 650px;
-  margin: 0 auto var(--space-12) auto;
+  max-width: 680px;
+  margin-inline: auto;
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+}
+
+.section-header p {
+  margin-inline: auto;
 }
 
 .section-subtitle {
   font-family: var(--font-sans);
   text-transform: uppercase;
-  font-size: var(--fs-sm);
+  font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
-  letter-spacing: 0.15em;
+  letter-spacing: 0.18em;
   color: var(--accent-dark);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
   display: block;
 }
 
 .section-title {
   font-size: var(--fs-3xl);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
 }
 
-@media (min-width: 768px) {
-  h1 { font-size: var(--fs-4xl); }
-  h2 { font-size: var(--fs-3xl); }
-  .section {
-    padding-top: var(--space-20);
-    padding-bottom: var(--space-20);
-  }
-}
-
-@media (min-width: 1024px) {
-  h1 { font-size: var(--fs-5xl); }
-  .section {
-    padding-top: var(--space-20);
-    padding-bottom: var(--space-20);
-  }
-}
-
-/* Visually Hidden Helper (Accessibility) */
+/* Visually Hidden Helper (WCAG AA Accessibility) */
 .sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
-/* Fade-in animation class for Intersection Observer */
+/* Skip to Content for Keyboard Users */
+.skip-link {
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--primary);
+  color: #FFFFFF;
+  padding: 0.75rem 1.5rem;
+  z-index: var(--z-toast);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-sm);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  box-shadow: var(--shadow-xl);
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: 1rem;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Scroll Lock when Modal or Mobile Nav is open */
+body.body-scroll-lock {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
+/* Scroll-Reveal Animation */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(24px);
   transition: opacity var(--transition-slow), transform var(--transition-slow);
+  will-change: opacity, transform;
 }
 
 .reveal.active {
@@ -165,13 +238,31 @@ ul, ol {
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 
-/* Accessibility Focus States */
+/* Accessible Focus States */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
   outline: 2px solid var(--accent-dark);
-  outline-offset: 4px;
+  outline-offset: 3px;
 }
 
+/* Accessibility Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

@@ -1,48 +1,56 @@
-/* css/variables.css */
+/* ==========================================================
+   css/variables.css — Design Tokens & Fluid Responsive Scale
+   ========================================================== */
+
 :root {
-  /* Colors */
-  --primary-rgb: 15, 23, 42;      /* Slate 900 */
+  /* Brand Palette (Sophisticated Slate & Champagne Gold) */
+  --primary-rgb: 15, 23, 42;          /* Slate 900 */
   --primary: rgb(var(--primary-rgb));
-  --primary-light: #1E293B;      /* Slate 800 */
-  --primary-dark: #0F172A;       /* Slate 900 */
+  --primary-light: #1E293B;          /* Slate 800 */
+  --primary-dark: #0A0F1D;           /* Deep Charcoal Slate */
   
-  --accent-rgb: 197, 168, 128;   /* Warm Gold / Champagne (#c5a880) */
+  --accent-rgb: 197, 168, 128;       /* Warm Champagne Gold (#C5A880) */
   --accent: rgb(var(--accent-rgb));
   --accent-light: #DFCEB7;
   --accent-dark: #9F825C;
   --accent-hover: #B49469;
+  --accent-subtle: rgba(var(--accent-rgb), 0.12);
+  --accent-glow: rgba(var(--accent-rgb), 0.25);
   
-  --text-rgb: 51, 65, 85;        /* Slate 700 */
+  --text-rgb: 51, 65, 85;            /* Slate 700 */
   --text: rgb(var(--text-rgb));
-  --text-light: #64748B;         /* Slate 500 */
-  --text-dark: #0F172A;          /* Slate 900 */
+  --text-light: #64748B;             /* Slate 500 */
+  --text-dark: #0F172A;              /* Slate 900 */
+  --text-muted: #94A3B8;             /* Slate 400 */
   
   --bg-rgb: 255, 255, 255;
   --bg: rgb(var(--bg-rgb));
-  --bg-offset: #F8FAFC;          /* Slate 50 */
+  --bg-offset: #F8FAFC;              /* Slate 50 */
   --bg-card: #FFFFFF;
-  --border-color: #E2E8F0;       /* Slate 200 */
+  --bg-overlay: rgba(15, 23, 42, 0.75);
+  --border-color: #E2E8F0;           /* Slate 200 */
+  --border-light: #F1F5F9;           /* Slate 100 */
   
-  --success-rgb: 16, 185, 129;   /* Emerald 500 */
+  --success-rgb: 16, 185, 129;       /* Emerald 500 */
   --success: rgb(var(--success-rgb));
-  --error-rgb: 239, 68, 68;      /* Red 500 */
+  --error-rgb: 239, 68, 68;          /* Red 500 */
   --error: rgb(var(--error-rgb));
   
-  /* Fonts */
-  --font-serif: 'Playfair Display', Georgia, serif;
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Typography Families */
+  --font-serif: 'Playfair Display', Georgia, Cambria, 'Times New Roman', serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   
-  /* Font Sizes */
-  --fs-xs: 0.75rem;
-  --fs-sm: 0.875rem;
-  --fs-base: 1rem;
-  --fs-md: 1.125rem;
-  --fs-lg: 1.25rem;
-  --fs-xl: 1.5rem;
-  --fs-2xl: 1.875rem;
-  --fs-3xl: 2.25rem;
-  --fs-4xl: 3rem;
-  --fs-5xl: 3.75rem;
+  /* Fluid Typography Scale (Smooth mathematical interpolation between 320px and 1440px viewports) */
+  --fs-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);       /* 12px -> 13px */
+  --fs-sm: clamp(0.8125rem, 0.78rem + 0.2vw, 0.875rem);       /* 13px -> 14px */
+  --fs-base: clamp(0.9375rem, 0.9rem + 0.25vw, 1rem);         /* 15px -> 16px */
+  --fs-md: clamp(1.0625rem, 1rem + 0.35vw, 1.1875rem);        /* 17px -> 19px */
+  --fs-lg: clamp(1.1875rem, 1.08rem + 0.55vw, 1.375rem);      /* 19px -> 22px */
+  --fs-xl: clamp(1.375rem, 1.22rem + 0.8vw, 1.625rem);        /* 22px -> 26px */
+  --fs-2xl: clamp(1.5rem, 1.35rem + 1.2vw, 2.125rem);         /* 24px -> 34px */
+  --fs-3xl: clamp(1.75rem, 1.5rem + 1.8vw, 2.625rem);         /* 28px -> 42px */
+  --fs-4xl: clamp(2rem, 1.65rem + 2.6vw, 3.5rem);             /* 32px -> 56px */
+  --fs-5xl: clamp(2.5rem, 2rem + 3.8vw, 4.5rem);              /* 40px -> 72px */
   
   /* Font Weights */
   --fw-light: 300;
@@ -51,34 +59,67 @@
   --fw-semibold: 600;
   --fw-bold: 700;
   
-  /* Layout & Spacing */
+  /* Layout, Fluid Containers & Spacing System */
   --container-max-width: 1280px;
+  --container-narrow: 960px;
+  --space-container-pad: clamp(1rem, 3.5vw, 2.5rem);
+  --space-section: clamp(3rem, 6vw + 1rem, 7rem);
+  
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
+  --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
+  --space-10: 2.5rem;
   --space-12: 3rem;
   --space-16: 4rem;
   --space-20: 5rem;
   
-  /* Border Radius */
+  /* Accessibility & Usability (Touch Targets & Header System) */
+  --min-touch-target: 44px;
+  --header-height: 80px;
+  --header-height-mobile: 72px;
+  --header-height-fluid: clamp(72px, 2vw + 64px, 80px);
+  
+  /* Safe Area Insets for iOS & Edge Devices */
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  
+  /* Border Radius System */
+  --radius-xs: 2px;
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
+  --radius-2xl: 24px;
   --radius-full: 9999px;
   
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
-  --shadow-inset: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  /* Elevation Shadows & Glassmorphism */
+  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 10px 20px -3px rgba(15, 23, 42, 0.08), 0 4px 8px -4px rgba(15, 23, 42, 0.04);
+  --shadow-xl: 0 20px 30px -5px rgba(15, 23, 42, 0.1), 0 8px 12px -6px rgba(15, 23, 42, 0.05);
+  --shadow-2xl: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+  --shadow-glow: 0 0 25px rgba(var(--accent-rgb), 0.35);
+  --shadow-inset: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
   
-  /* Animations & Transitions */
-  --transition-fast: 0.15s ease;
+  /* Z-Index Hierarchy */
+  --z-base: 1;
+  --z-dropdown: 50;
+  --z-sticky: 100;
+  --z-header: 500;
+  --z-backdrop: 900;
+  --z-drawer: 950;
+  --z-modal: 1000;
+  --z-toast: 2000;
+  
+  /* Transitions & Easing */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
